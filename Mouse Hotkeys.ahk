@@ -18,11 +18,14 @@ XButton1 & RButton:: {
     Send "{Ctrl down}a{Ctrl up}"
 }
 
-; XButton1 + LButton = Ctrl + Enter (updated per request)
-XButton1 & LButton:: Send "{Ctrl down}{Enter}{Ctrl up}"
+; XButton1 + LButton = Enter (reverted per request)
+XButton1 & LButton:: Send "{Enter}"
 
 ; XButton1 + WheelDown = Send 'j' (for next post on X/Twitter)
 XButton1 & WheelDown:: Send "j"
+
+; XButton1 + MButton (Wheel Click) = Ctrl + Enter (new per request)
+XButton1 & MButton:: Send "{Ctrl down}{Enter}{Ctrl up}"
 
 ; XButton1 solo release = Ctrl + `
 XButton1 Up:: {
