@@ -1,128 +1,153 @@
 #SingleInstance Force
 SetWorkingDir A_ScriptDir
 
-; --- Global state ---
-global scrollState := 0        ; 0 = stopped, 1 = scrolling
-global scrollDirection := 0    ; 0 = none, 1 = down, -1 = up
+; Globals
+global scrollState := 0 ; 0 = stopped, 1 = scrolling
+global scrollDirection := 0 ; 0 = none, 1 = down, -1 = up
 global lButtonPressed := false ; Track Left Click state
 
-; --- Toggle suspend (F1) ---
+; Toggle Suspend (F1)
 F1:: {
-    Suspend()
-    ToolTip("Hotkeys " (A_IsSuspended ? "Suspended" : "Resumed"), 0, 0)
-    SetTimer(() => ToolTip(), -2000)
+    Suspend
+    ToolTip "Hotkeys " (A_IsSuspended ? "Suspended" : "Resumed"), 0, 0
+    SetTimer () => ToolTip(), -2000
 }
 
-; --- XButton1 combos ---
+; XButton1 + RButton = Select All (Ctrl+A), blocks default context menu
 XButton1 & RButton:: {
-    Send("^a") ; Select all
+    Send "{Ctrl down}a{Ctrl up}"
 }
-XButton1 & LButton:: {
-    Send("{Enter}")
-}
+
+; XButton1 + LButton = Ctrl + Enter (updated per request)
+XButton1 & LButton:: Send "{Ctrl down}{Enter}{Ctrl up}"
+
+; XButton1 + WheelDown = Send 'j' (for next post on X/Twitter)
+XButton1 & WheelDown:: Send "j"
+
+; XButton1 solo release = Ctrl + `
 XButton1 Up:: {
-    if (!GetKeyState("LButton","P") && !GetKeyState("RButton","P"))
-        Send("^{``}")
+    if (!GetKeyState("LButton", "P") && !GetKeyState("RButton", "P"))
+        Send "{Ctrl down}{``}{Ctrl up}"
 }
 
-; --- MButton ---
-MButton Up:: {
-    Send("^v")
-}
+; MButton solo release = Paste (Ctrl+V)
+MButton Up:: Send "{Ctrl down}v{Ctrl up}"
 
-; --- XButton2 combos ---
-XButton2 & LButton:: {
-    Send("^s")
-}
-XButton2 & RButton:: {
-    ; Do nothing
-}
+; XButton2 + LButton = Save (Ctrl+S)
+XButton2 & LButton:: Send "{Ctrl down}s{Ctrl up}"
+
+; XButton2 + RButton = Do nothing
+XButton2 & RButton:: return
+
+; XButton2 solo release = Windows Clipboard (Win+V)
 XButton2 Up:: {
-    if (!GetKeyState("LButton","P") && !GetKeyState("RButton","P"))
-        Send("#{v}")
+    if (!GetKeyState("LButton", "P") && !GetKeyState("RButton", "P"))
+        Send "#{v}"
 }
 
-; --- Left Button tracking ---
-~LButton:: {
-    global lButtonPressed := true
-}
-~LButton Up:: {
-    global lButtonPressed := false
-}
-
-; --- Right Button logic ---
-~RButton:: {
+; LButton held + RButton = Copy (Ctrl+C)
+RButton:: {
     global lButtonPressed
-    if (lButtonPressed && !GetKeyState("XButton1","P") && !GetKeyState("XButton2","P")) {
+    if (lButtonPressed && !GetKeyState("XButton1", "P") && !GetKeyState("XButton2", "P")) {
         if WinExist("ahk_class #32768") {
-            Send("{Esc}")
-            Sleep(50)
+            Send "{Esc}"
+            Sleep 50
         }
-        Send("^c")
-        KeyWait("RButton")
+        Send "{Ctrl down}c{Ctrl up}"
+        KeyWait "RButton"
         return
     }
+    Send "{RButton down}"
+    KeyWait "RButton"
+    Send "{RButton up}"
 }
 
-; --- Auto-scroll (Alt+PgDn / Alt+PgUp) ---
+; Track LButton state
+LButton:: {
+    global lButtonPressed
+    lButtonPressed := true
+    Send "{LButton down}"
+}
+
+LButton Up:: {
+    global lButtonPressed
+    lButtonPressed := false
+    Send "{LButton up}"
+}
+
+; Alt + PgDn = Toggle auto-scroll down
 !PgDn:: {
     global scrollState, scrollDirection
+    ; ToolTip "Alt + PgDn pressed, State: " scrollState, 0, 0  ; Uncomment for debug
+    ; SetTimer () => ToolTip(), -2000
     if (scrollState = 0) {
-        scrollState := 1, scrollDirection := 1
-        SetTimer(ScrollDown, 1)
+        scrollState := 1
+        scrollDirection := 1
+        SetTimer ScrollDown, 50  ; Interval for better control
     } else {
-        scrollState := 0, scrollDirection := 0
-        SetTimer(ScrollDown, 0)
-        SetTimer(ScrollUp, 0)
+        scrollState := 0
+        scrollDirection := 0
+        SetTimer ScrollDown, 0
+        SetTimer ScrollUp, 0
     }
-    ToolTip("Alt+PgDn pressed, State: " scrollState, 0, 0)
-    SetTimer(() => ToolTip(), -2000)
 }
 
+; Alt + PgUp = Toggle auto-scroll up
 !PgUp:: {
     global scrollState, scrollDirection
+    ; ToolTip "Alt + PgUp pressed, State: " scrollState, 0, 0  ; Uncomment for debug
+    ; SetTimer () => ToolTip(), -2000
     if (scrollState = 0) {
-        scrollState := 1, scrollDirection := -1
-        SetTimer(ScrollUp, 1)
+        scrollState := 1
+        scrollDirection := -1
+        SetTimer ScrollUp, 50  ; Interval for better control
     } else {
-        scrollState := 0, scrollDirection := 0
-        SetTimer(ScrollDown, 0)
-        SetTimer(ScrollUp, 0)
+        scrollState := 0
+        scrollDirection := 0
+        SetTimer ScrollDown, 0
+        SetTimer ScrollUp, 0
     }
-    ToolTip("Alt+PgUp pressed, State: " scrollState, 0, 0)
-    SetTimer(() => ToolTip(), -2000)
 }
 
+; PgDn = Cancel scroll if active, else normal
 PgDn:: {
     global scrollState, scrollDirection
     if (scrollState > 0) {
-        scrollState := 0, scrollDirection := 0
-        SetTimer(ScrollDown, 0)
-        SetTimer(ScrollUp, 0)
-        ToolTip("Scroll canceled", 0, 20)
-        SetTimer(() => ToolTip(), -2000)
-    } else Send("{PgDn}")
+        scrollState := 0
+        scrollDirection := 0
+        SetTimer ScrollDown, 0
+        SetTimer ScrollUp, 0
+        ToolTip "Scroll canceled", 0, 20
+        SetTimer () => ToolTip(), -2000
+    } else {
+        Send "{PgDn}"
+    }
 }
 
+; PgUp = Cancel scroll if active, else normal
 PgUp:: {
     global scrollState, scrollDirection
     if (scrollState > 0) {
-        scrollState := 0, scrollDirection := 0
-        SetTimer(ScrollDown, 0)
-        SetTimer(ScrollUp, 0)
-        ToolTip("Scroll canceled", 0, 20)
-        SetTimer(() => ToolTip(), -2000)
-    } else Send("{PgUp}")
+        scrollState := 0
+        scrollDirection := 0
+        SetTimer ScrollDown, 0
+        SetTimer ScrollUp, 0
+        ToolTip "Scroll canceled", 0, 20
+        SetTimer () => ToolTip(), -2000
+    } else {
+        Send "{PgUp}"
+    }
 }
 
-; --- Scroll functions ---
+; Scroll functions
 ScrollDown() {
     global scrollDirection
     if (scrollDirection = 1)
-        Send("{WheelDown}")
+        Send "{WheelDown}"
 }
+
 ScrollUp() {
     global scrollDirection
     if (scrollDirection = -1)
-        Send("{WheelUp}")
+        Send "{WheelUp}"
 }
