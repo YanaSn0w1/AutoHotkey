@@ -18,14 +18,17 @@ XButton1 & RButton:: {
     Send "{Ctrl down}a{Ctrl up}"
 }
 
-; XButton1 + LButton = Enter (reverted per request)
+; XButton1 + LButton = Enter
 XButton1 & LButton:: Send "{Enter}"
 
 ; XButton1 + WheelDown = Send 'j' (for next post on X/Twitter)
 XButton1 & WheelDown:: Send "j"
 
-; XButton1 + MButton (Wheel Click) = Ctrl + Enter (new per request)
-XButton1 & MButton:: Send "{Ctrl down}{Enter}{Ctrl up}"
+; XButton1 + WheelUp = Ctrl + Enter (new per request)
+XButton1 & WheelUp:: Send "{Ctrl down}{Enter}{Ctrl up}"
+
+; XButton1 + MButton (Wheel Click) = Do nothing (updated per request)
+XButton1 & MButton:: return
 
 ; XButton1 solo release = Ctrl + `
 XButton1 Up:: {
@@ -86,7 +89,7 @@ LButton Up:: {
     if (scrollState = 0) {
         scrollState := 1
         scrollDirection := 1
-        SetTimer ScrollDown, 50  ; Interval for better control
+        SetTimer ScrollDown, 1  ; 1ms as per notes
     } else {
         scrollState := 0
         scrollDirection := 0
@@ -103,7 +106,7 @@ LButton Up:: {
     if (scrollState = 0) {
         scrollState := 1
         scrollDirection := -1
-        SetTimer ScrollUp, 50  ; Interval for better control
+        SetTimer ScrollUp, 1  ; 1ms as per notes
     } else {
         scrollState := 0
         scrollDirection := 0
