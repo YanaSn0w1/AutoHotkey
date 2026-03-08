@@ -20,9 +20,9 @@ Copy: left + right
 
 Paste: Wheel click
 
-XButton1 + down scroll for 'j' (X/Twitter next post) 
+Right click + down scroll for 'j' (X/Twitter next post) 
 
-XButton1 + up scroll for Ctrl + Enter 
+Right click + up scroll for Ctrl + Enter 
 
 Auto scroll: Alt + Page up/down. One time for 1ms two times or page up/down to stop.
 
