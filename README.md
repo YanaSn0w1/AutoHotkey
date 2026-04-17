@@ -34,6 +34,7 @@ May need to suspend hotkeys (right click tray) to use other apps and or move stu
 
 Run as admin to avoid admin apps conflicting.
 
+X/Twitter enable paste as plain text or it will show camera emoji on all. 3 dot > options > Quick Paste Keyboard > Paste selected plain text (select it) > First keypress (mouse click) > double click.
 
 <img width="1600" height="900" alt="25-10-30_20h-04m-39s-093ms" src="https://github.com/user-attachments/assets/dc7a3c4c-62a3-4b45-b4d2-c29c968c9da3" />
 
