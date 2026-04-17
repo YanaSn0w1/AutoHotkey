@@ -15,7 +15,7 @@ F1:: {
     SetTimer(() => ToolTip(), -2000)
 }
 
-; XButton1 + RButton = Select All (Ctrl+A), blocks default context menu
+; XButton1 + RButton = Select All (Ctrl+A)
 XButton1 & RButton:: {
     Send("{Ctrl down}a{Ctrl up}")
 }
@@ -32,28 +32,24 @@ XButton1 Up:: {
         Send("{Ctrl down}{``}{Ctrl up}")
 }
 
-; ==================== MIDDLE MOUSE PASTE RESTORED (original working version) ====================
-; MButton solo release = Paste (Ctrl+V)   ← your normal paste is back!
-MButton Up:: Send("{Ctrl down}v{Ctrl up}")
+; ==================== MIDDLE MOUSE = PLAIN TEXT PASTE (fixes camera emoji) ====================
+; MButton solo release = Paste as Plain Text only
+MButton Up::
+{
+    ClipSaved := ClipboardAll()      ; save everything
+    A_Clipboard := A_Clipboard       ; force plain text only (this is the correct v2 line)
+    Send("{Ctrl down}v{Ctrl up}")
+    Sleep(100)                       ; longer delay for reliability
+    A_Clipboard := ClipSaved         ; restore original clipboard
+}
 
-; ==================== PLAIN TEXT PASTE BLOCKS (still commented out until we fix them safely) ====================
-; MButton solo release = Paste as Plain Text only (disabled for now)
-;MButton Up::
-;{
-;    ClipSaved := ClipboardAll()
-;    A_Clipboard := A_Clipboard
-;    Send("{Ctrl down}v{Ctrl up}")
-;    Sleep(50)
-;    A_Clipboard := ClipSaved
-;}
-
-; Ctrl+V = Always paste as plain text everywhere (disabled for now)
+; ==================== OPTIONAL: Ctrl+V also plain text (uncomment if you want it) ====================
 ;^v::
 ;{
 ;    ClipSaved := ClipboardAll()
 ;    A_Clipboard := A_Clipboard
 ;    Send("{Ctrl down}v{Ctrl up}")
-;    Sleep(50)
+;    Sleep(100)
 ;    A_Clipboard := ClipSaved
 ;}
 
@@ -69,7 +65,7 @@ XButton2 Up:: {
         Send("#{v}")
 }
 
-; RButton + WheelDown = Send 'j' (for next post on X/Twitter)
+; RButton + WheelDown = Send 'j'
 RButton & WheelDown:: {
     global rWheelUsed
     rWheelUsed := true
@@ -152,7 +148,7 @@ LButton Up:: {
     }
 }
 
-; PgDn = Cancel scroll if active, else normal
+; PgDn / PgUp scroll cancel
 PgDn:: {
     global scrollState, scrollDirection
     if (scrollState > 0) {
@@ -167,7 +163,6 @@ PgDn:: {
     }
 }
 
-; PgUp = Cancel scroll if active, else normal
 PgUp:: {
     global scrollState, scrollDirection
     if (scrollState > 0) {
