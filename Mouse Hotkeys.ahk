@@ -32,26 +32,8 @@ XButton1 Up:: {
         Send("{Ctrl down}{``}{Ctrl up}")
 }
 
-; ==================== MIDDLE MOUSE = PLAIN TEXT PASTE (fixes camera emoji) ====================
-; MButton solo release = Paste as Plain Text only
-MButton Up::
-{
-    ClipSaved := ClipboardAll()      ; save everything
-    A_Clipboard := A_Clipboard       ; force plain text only (this is the correct v2 line)
-    Send("{Ctrl down}v{Ctrl up}")
-    Sleep(100)                       ; longer delay for reliability
-    A_Clipboard := ClipSaved         ; restore original clipboard
-}
-
-; ==================== OPTIONAL: Ctrl+V also plain text (uncomment if you want it) ====================
-;^v::
-;{
-;    ClipSaved := ClipboardAll()
-;    A_Clipboard := A_Clipboard
-;    Send("{Ctrl down}v{Ctrl up}")
-;    Sleep(100)
-;    A_Clipboard := ClipSaved
-;}
+; ==================== MIDDLE MOUSE PASTE RESTORED (normal & fast) ====================
+MButton Up:: Send("{Ctrl down}v{Ctrl up}")
 
 ; XButton2 + LButton = Save (Ctrl+S)
 XButton2 & LButton:: Send("{Ctrl down}s{Ctrl up}")
@@ -118,7 +100,7 @@ LButton Up:: {
     Send("{LButton up}")
 }
 
-; Alt + PgDn = Toggle auto-scroll down
+; Alt + PgDn / PgUp auto-scroll
 !PgDn:: {
     global scrollState, scrollDirection
     if (scrollState = 0) {
@@ -133,7 +115,6 @@ LButton Up:: {
     }
 }
 
-; Alt + PgUp = Toggle auto-scroll up
 !PgUp:: {
     global scrollState, scrollDirection
     if (scrollState = 0) {
@@ -148,7 +129,7 @@ LButton Up:: {
     }
 }
 
-; PgDn / PgUp scroll cancel
+; PgDn / PgUp cancel scroll
 PgDn:: {
     global scrollState, scrollDirection
     if (scrollState > 0) {
