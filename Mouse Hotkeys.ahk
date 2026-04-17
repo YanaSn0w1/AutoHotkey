@@ -23,7 +23,7 @@ XButton1 & RButton:: {
 ; XButton1 + LButton = Enter
 XButton1 & LButton:: Send("{Enter}")
 
-; XButton1 + MButton (Wheel Click) = Do nothing (updated per request)
+; XButton1 + MButton (Wheel Click) = Do nothing
 XButton1 & MButton:: return
 
 ; XButton1 solo release = Ctrl + `
@@ -32,8 +32,30 @@ XButton1 Up:: {
         Send("{Ctrl down}{``}{Ctrl up}")
 }
 
-; MButton solo release = Paste (Ctrl+V)
+; ==================== MIDDLE MOUSE PASTE RESTORED (original working version) ====================
+; MButton solo release = Paste (Ctrl+V)   ← your normal paste is back!
 MButton Up:: Send("{Ctrl down}v{Ctrl up}")
+
+; ==================== PLAIN TEXT PASTE BLOCKS (still commented out until we fix them safely) ====================
+; MButton solo release = Paste as Plain Text only (disabled for now)
+;MButton Up::
+;{
+;    ClipSaved := ClipboardAll()
+;    A_Clipboard := A_Clipboard
+;    Send("{Ctrl down}v{Ctrl up}")
+;    Sleep(50)
+;    A_Clipboard := ClipSaved
+;}
+
+; Ctrl+V = Always paste as plain text everywhere (disabled for now)
+;^v::
+;{
+;    ClipSaved := ClipboardAll()
+;    A_Clipboard := A_Clipboard
+;    Send("{Ctrl down}v{Ctrl up}")
+;    Sleep(50)
+;    A_Clipboard := ClipSaved
+;}
 
 ; XButton2 + LButton = Save (Ctrl+S)
 XButton2 & LButton:: Send("{Ctrl down}s{Ctrl up}")
@@ -47,7 +69,7 @@ XButton2 Up:: {
         Send("#{v}")
 }
 
-; RButton + WheelDown = Send 'j' (for next post on X/Twitter), debounced to one per burst
+; RButton + WheelDown = Send 'j' (for next post on X/Twitter)
 RButton & WheelDown:: {
     global rWheelUsed
     rWheelUsed := true
@@ -56,7 +78,7 @@ RButton & WheelDown:: {
     }
 }
 
-; RButton + WheelUp = Ctrl + Enter, debounced to one per burst
+; RButton + WheelUp = Ctrl + Enter
 RButton & WheelUp:: {
     global rWheelUsed
     rWheelUsed := true
@@ -79,7 +101,6 @@ RButton:: {
         copyPerformed := false
         return
     }
-    ; normal RButton or combo
     rWheelUsed := false
     KeyWait("RButton")
     if (rWheelUsed) {
@@ -104,12 +125,10 @@ LButton Up:: {
 ; Alt + PgDn = Toggle auto-scroll down
 !PgDn:: {
     global scrollState, scrollDirection
-    ; ToolTip("Alt + PgDn pressed, State: " scrollState, 0, 0)  ; Uncomment for debug
-    ; SetTimer(() => ToolTip(), -2000)
     if (scrollState = 0) {
         scrollState := 1
         scrollDirection := 1
-        SetTimer(ScrollDown, 1)  ; 1ms as per notes
+        SetTimer(ScrollDown, 1)
     } else {
         scrollState := 0
         scrollDirection := 0
@@ -121,12 +140,10 @@ LButton Up:: {
 ; Alt + PgUp = Toggle auto-scroll up
 !PgUp:: {
     global scrollState, scrollDirection
-    ; ToolTip("Alt + PgUp pressed, State: " scrollState, 0, 0)  ; Uncomment for debug
-    ; SetTimer(() => ToolTip(), -2000)
     if (scrollState = 0) {
         scrollState := 1
         scrollDirection := -1
-        SetTimer(ScrollUp, 1)  ; 1ms as per notes
+        SetTimer(ScrollUp, 1)
     } else {
         scrollState := 0
         scrollDirection := 0
