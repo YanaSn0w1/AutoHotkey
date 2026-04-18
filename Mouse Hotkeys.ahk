@@ -32,26 +32,8 @@ XButton1 Up:: {
         Send("{Ctrl down}{``}{Ctrl up}")
 }
 
-; ==================== MIDDLE MOUSE = PLAIN TEXT + NO EXTRA LINE ====================
-MButton Up::
-{
-    ClipSaved := ClipboardAll()           ; backup full clipboard
-    text := Trim(A_Clipboard, " `t`r`n")  ; force plain text + remove trailing blank lines
-    A_Clipboard := text
-    Send("{Ctrl down}v{Ctrl up}")
-    Sleep(60)
-    A_Clipboard := ClipSaved              ; restore original
-}
-
-; ==================== OPTIONAL Ctrl+V plain text (uncomment if you want) ====================
-;^v:: {
-;    ClipSaved := ClipboardAll()
-;    text := Trim(A_Clipboard, " `t`r`n")
-;    A_Clipboard := text
-;    Send("{Ctrl down}v{Ctrl up}")
-;    Sleep(60)
-;    A_Clipboard := ClipSaved
-;}
+; ==================== MIDDLE MOUSE WHEEL CLICK = NORMAL PASTE (images work again) ====================
+MButton Up:: Send("{Ctrl down}v{Ctrl up}")
 
 ; XButton2 + LButton = Save (Ctrl+S)
 XButton2 & LButton:: Send("{Ctrl down}s{Ctrl up}")
