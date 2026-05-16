@@ -38,3 +38,9 @@ X/Twitter enable paste as plain text or it will show camera emoji on all. 3 dot 
 
 <img width="1600" height="900" alt="25-10-30_20h-04m-39s-093ms" src="https://github.com/user-attachments/assets/dc7a3c4c-62a3-4b45-b4d2-c29c968c9da3" />
 
+# quote_beast.ahk
+
+Same thing but hold right + scroll up generates an AI reply with 
+
+# [PayPal-Donations](https://www.paypal.com/donate/?hosted_button_id=9LWWH273HEVC4 "Donate to YanaHeat") ⬅️ [Quote_beast.py](https://github.com/YanaSn0w1/Python/blob/main/Quotebeast/Quote_beast.py "Quote_beast.py") ⬅️
+
