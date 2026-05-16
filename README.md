@@ -42,6 +42,4 @@ X/Twitter enable paste as plain text or it will show camera emoji on all. 3 dot 
 
 # [Quote_beast.ahk](https://github.com/YanaSn0w1/AutoHotkey/blob/main/quote_beast.ahk "Quote_beast.ahk") ⬅️
 
-Same thing but hold right + scroll up generates an AI reply with [Quote_beast.py](https://github.com/YanaSn0w1/Python/blob/main/Quotebeast/Quote_beast.py "Quote_beast.py") ⬅️
-
-# [PayPal-Donations](https://www.paypal.com/donate/?hosted_button_id=9LWWH273HEVC4 "Donate to YanaHeat") ⬅️ 
+Same thing but hold right + scroll up generates an AI reply with # [Quote_beast.py](https://github.com/YanaSn0w1/Python/blob/main/Quotebeast/Quote_beast.py "Quote_beast.py") ⬅️
