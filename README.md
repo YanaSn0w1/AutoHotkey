@@ -42,4 +42,9 @@ X/Twitter enable paste as plain text or it will show camera emoji on all. 3 dot 
 
 # [Quote_beast.ahk](https://github.com/YanaSn0w1/AutoHotkey/blob/main/quote_beast.ahk "Quote_beast.ahk") ⬅️
 
-Same thing but more advanced, hold right + scroll up generates normal AI reply, left and scroll for shorter reply, xbutton1 + scroll to change modes with [Quote_beast.py](https://github.com/YanaSn0w1/Python/blob/main/Quotebeast/Quote_beast.py "Quote_beast.py") ⬅️
+Same thing but more advanced, hold right + scroll up generates normal AI reply, left and scroll for shorter reply, xbutton1 + scroll to change modes.
+
+# For use with [Quote_beast.py](https://github.com/YanaSn0w1/Python/blob/main/Quotebeast/Quote_beast.py "Quote_beast.py") ⬅️
+
+<img width="1600" height="900" alt="vlc_dAf1m9jSvf" src="https://github.com/user-attachments/assets/bb4cb8cf-babc-4ba0-ab7b-93594c1a307a" />
+
