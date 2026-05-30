@@ -42,7 +42,7 @@ X/Twitter enable paste as plain text or it will show camera emoji on all. 3 dot 
 
 # [Quote_beast.ahk](https://github.com/YanaSn0w1/AutoHotkey/blob/main/quote_beast.ahk "Quote_beast.ahk") ⬅️
 
-Same thing as Mouse Hotkeys.ahk but more advanced.
+Same as the above Mouse Hotkeys.ahk but more advanced.
 - Right + scroll for normal AI reply
 - Left + scroll for shorter
 - Xbutton1 + scroll for mode change.
