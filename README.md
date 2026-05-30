@@ -51,5 +51,5 @@ Same as the above Mouse Hotkeys.ahk but more advanced.
 
 <img width="1600" height="900" alt="vlc_dAf1m9jSvf" src="https://github.com/user-attachments/assets/bb4cb8cf-babc-4ba0-ab7b-93594c1a307a" />
 
-[PayPal-Donations](https://www.paypal.com/donate/?hosted_button_id=9LWWH273HEVC4 "Donate to YanaHeat") ⬅️
+# [PayPal-Donations](https://www.paypal.com/donate/?hosted_button_id=9LWWH273HEVC4 "Donate to YanaHeat") ⬅️
 
